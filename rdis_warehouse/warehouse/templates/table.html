@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+{% csrf_token %}
+<html lang="ru">
+
+{% include "events/header.html" %}
+
+
+<body>
+
+{% include "events/navbar.html" %}
+
+<main id="main">
+  {% include "events/breadcrumbs.html" with from="Таблицы" what="" %}
+
+  {% if user.is_authenticated %}
+  <section id="profile">
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Добро пожаловать</h2> <p>{{ user.get_username }}</p>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>
+              <a href="{% url 'admin:warehouse_storage_add' %}"><p class="text-primary">Добавить учет</p></a>
+            </th>
+            <th>
+              <a href="{% url 'admin:warehouse_storagelocation_add' %}"><p class="text-primary">Добавить расположение</p></a>
+            </th>
+            <th>
+              <a href="{% url 'admin:warehouse_workers_add' %}"><p class="text-primary">Добавить сотрудника</p></a>
+            </th>
+            <th>
+              <a href="{% url 'admin:warehouse_inventory_add' %}"><p class="text-primary">Добавить инвентарь</p></a>
+            </th>
+            <th>
+              <a href="{% url 'admin:warehouse_inventorytype_add' %}"><p class="text-primary">Добавить тип инвентаря</p></a>
+            </th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+
+      <div class="row">
+        <h2>Таблица учета</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Тип</th>
+              <th>Название</th>
+              <th>Инвентарный номер</th>
+              <th>Место нахождения</th>
+              <th>Дата выдачи</th>
+              <th>Дата окончания</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+          {% load admin_urls %}
+          {% for item in stuff %}
+          <tr>
+            <!--<td><a href="{% url 'warehouse:update' value=item.id_storage %}"><p class="text-primary">Изменить элемент</p></a></td>-->
+            <td><a href="{% url 'admin:warehouse_storage_change' item.pk %}"><p class="text-primary">Изменить элемент</p></a></td>
+            <td>{{ item.inventory.type }}</td>
+            <td>{{ item.inventory.inventory_name }}</td>
+            <td>{{ item.inventory.inventory_number }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.start_date }}</td>
+            <td>{{ item.end_date }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </section>
+
+  {% else %}
+  <section id="not authenticated">
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Вы не авторизованы</h2> <p><a href="{% url 'warehouse:login'%}?next={{request.path}}">Войти в систему</a></p>
+      </div>
+    </div>
+  </section>
+
+  {% endif %}
+</main>
+
+
+{% include "events/footer.html" %}
+
+</body>
+
+</html>

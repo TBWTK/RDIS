@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+{% csrf_token %}
+<html lang="ru">
+
+{% include "events/header.html" %}
+
+
+<body>
+
+{% include "events/navbar.html" %}
+
+<main id="main">
+  {% include "events/breadcrumbs.html" with from="Таблицы" what="Изменение элемента" %}
+
+  <section id="profile">
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Добро пожаловать</h2> <p>{{ user.get_username }}</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <h2>Таблица учета</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Тип</th>
+              <th>Название</th>
+              <th>Инвентарный номер</th>
+              <th>Место нахождения</th>
+              <th>Дата выдачи</th>
+              <th>Дата окончания</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ item.inventory.type }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOne">
+                  {% for type in type_inventory %}
+                  <a class="dropdown-item" href="#" name="product" value="{{ type.id_type }}" onclick="updateDropdownText(event, 'dropdownMenuButtonOne')">{{ type.type_name }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control" value="{{ item.inventory.inventory_name }}" data-id="{{ item.inventory.id_inventory }}">
+            </td>
+            <td>
+              <input type="text" class="form-control" value="{{ item.inventory.inventory_number }}" data-id="{{ item.inventory.id_inventory }}">
+            </td>
+
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonTwo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ item.location }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonTwo">
+                  {% for location in locations %}
+                  <a class="dropdown-item" href="#" name="location" value="{{ location.id_location }}" onclick="updateDropdownText(event, 'dropdownMenuButtonTwo')">{{ location.location_name }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+            </td>
+
+            <td>
+<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+  <input class="span2" size="16" type="text" value="12-02-2012">
+  <span class="add-on"><i class="icon-th"></i></span>
+</div>
+            </td>
+
+            <td>{{ item.end_date }}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </section>
+</main>
+
+
+
+</body>
+
+{% include "events/footer.html" %}
+
+<script>
+function updateDropdownText(event, dropdownId) {
+  event.preventDefault();
+  const selectedText = event.target.textContent;
+  const dropdownButton = document.getElementById(dropdownId);
+  dropdownButton.textContent = selectedText;
+}
+
+</script>
+
+</html>

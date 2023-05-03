@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru">
+{% include "events/header.html" %}
+
+
+<body>
+
+{% include "events/navbar.html" %}
+{% block content %}
+
+{% include "events/breadcrumbs.html" with from="Спасибо за посещение" what="Выход" %}
+<p>Logged out!</p>
+
+<a href="{% url 'school:login'%}">Нажмите здесь, чтобы снова войти в систему.</a>
+{% endblock %}
+
+{% include "events/footer.html" %}
+</body>
+</html>

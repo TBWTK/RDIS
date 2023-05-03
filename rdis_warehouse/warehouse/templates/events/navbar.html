@@ -1,0 +1,27 @@
+{% load static %}
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+      <h1 class="logo me-auto me-lg-0">
+        <a href="index.html"><span>RDIS</span></a>
+        <a href="index.html"> - УЧЕТ</a>
+      </h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-1">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'warehouse:main'%}">Таблицы</a></li>
+          <li><a class="nav-link scrollto" href="#">Справочник</a></li>
+          <li><a class="nav-link scrollto" target="_blank" href="{% url 'admin:index' %}">Админ панель</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'warehouse:logout'%}">Выход</a></li>
+          {% else %}
+          <li><a href="{% url 'warehouse:login'%}?next={{request.path}}">Вход</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
