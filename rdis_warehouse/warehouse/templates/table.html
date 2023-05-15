@@ -24,6 +24,27 @@
 
     <div class="container">
       <div class="row">
+        <div class="accordion" id="accordionBasic">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Экспортировать данные в Excel
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+              <div class="accordion-body">
+                <form method="post" action="{% url 'warehouse:export_excel' %}">
+                  {% csrf_token %}
+                        <label for="quantity" class="form-label">Количество последних записей:</label>
+                        <input class="form-control" type="number" id="quantity" name="quantity">
+                        <button class="btn btn-success" type="submit">Экспорт в Excel</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <table class="table">
           <thead>
           <tr>
@@ -67,7 +88,6 @@
           {% load admin_urls %}
           {% for item in stuff %}
           <tr>
-            <!--<td><a href="{% url 'warehouse:update' value=item.id_storage %}"><p class="text-primary">Изменить элемент</p></a></td>-->
             <td><a href="{% url 'admin:warehouse_storage_change' item.pk %}"><p class="text-primary">Изменить элемент</p></a></td>
             <td>{{ item.inventory.type }}</td>
             <td>{{ item.inventory.inventory_name }}</td>
